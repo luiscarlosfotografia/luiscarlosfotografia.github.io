@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Luis Carlos Fotografia — Orçamento & Agendamento</title>
+  <meta name="description" content="Simule seu ensaio ou evento, escolha a data e agende via WhatsApp." />
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:#11131a;
+      --muted:#a7b0c0;
+      --text:#eef1f7;
+      --line:rgba(255,255,255,.10);
+      --accent:#f3d9a4;
+      --accent2:#a7d8ff;
+      --ok:#8ff0a4;
+      --warn:#ffcc66;
+      --danger:#ff7b7b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(243,217,164,.14), transparent 55%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(167,216,255,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 70px}
+    header{
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+      padding:10px 6px 18px;
+    }
+    .brand{
+      display:flex; gap:12px; align-items:center;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(243,217,164,.95), rgba(167,216,255,.85));
+      box-shadow: var(--shadow);
+    }
+    .title h1{font-size:18px; margin:0}
+    .title p{margin:2px 0 0; color:var(--muted); font-size:13px}
+    .topBtns{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      transition:.2s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(243,217,164,.45)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(243,217,164,.95), rgba(243,217,164,.65));
+      color:#1a1b1f;
+      border-color: transparent;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      margin-top:6px;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+    }
+    .card{
+      background: rgba(17,19,26,.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius2);
+      padding:18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .heroLeft h2{
+      margin:0 0 10px;
+      font-size:30px;
+      letter-spacing:-.3px;
+    }
+    .heroLeft p{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .badge{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 999px;
+      padding:8px 12px;
+      font-size:13px;
+      color: var(--muted);
+    }
+
+    .sectionTitle{
+      margin:26px 6px 12px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .sectionTitle h3{margin:0; font-size:18px}
+    .sectionTitle span{color:var(--muted); font-size:13px}
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    @media (max-width: 900px){ .grid2{grid-template-columns:1fr} }
+
+    label{display:block; font-size:13px; color:var(--muted); margin:12px 0 6px}
+    input, select, textarea{
+      width:100%;
+      padding:11px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(243,217,164,.55);
+    }
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 520px){ .row{grid-template-columns:1fr} }
+
+    .hint{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .summary{
+      border-top:1px solid var(--line);
+      margin-top:14px;
+      padding-top:14px;
+      display:grid;
+      gap:10px;
+    }
+    .sumLine{
+      display:flex; justify-content:space-between; gap:10px;
+      font-size:14px;
+    }
+    .sumLine strong{font-size:16px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:13px;
+      width:fit-content;
+    }
+    .ok{color:var(--ok)}
+    .warn{color:var(--warn)}
+    .danger{color:var(--danger)}
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .actions .btn{flex:1; justify-content:center}
+    .actions .btn.primary{flex:2}
+
+    /* Galeria */
+    .filters{display:flex; gap:10px; flex-wrap:wrap; margin: 0 6px 10px}
+    .chip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+      transition:.2s ease;
+      user-select:none;
+    }
+    .chip.active{
+      border-color: rgba(243,217,164,.55);
+      color: var(--text);
+      background: rgba(243,217,164,.10);
+    }
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 900px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 520px){ .gallery{grid-template-columns:1fr} }
+    .gItem{
+      border-radius: 18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      position:relative;
+      min-height: 180px;
+    }
+    .gItem img{
+      width:100%; height:220px; object-fit:cover; display:block;
+      filter: contrast(1.02) saturate(1.04);
+    }
+    .gCap{
+      padding:12px;
+      display:flex; justify-content:space-between; gap:10px; align-items:center;
+    }
+    .gCap b{font-size:14px}
+    .gCap span{color:var(--muted); font-size:12px}
+    footer{
+      margin-top:26px;
+      padding:18px 6px 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1>Luis Carlos Fotografia</h1>
+          <p>Simule • Escolha a data • Agende pelo WhatsApp</p>
+        </div>
+      </div>
+      <div class="topBtns">
+        <a class="btn" href="#portfolio">Portfólio</a>
+        <a class="btn primary" href="#agendar">Simular & Agendar</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="card heroLeft">
+        <h2>Menos direct. Mais agenda cheia.</h2>
+        <p>
+          Aqui você vê valores, escolhe o dia e me chama no WhatsApp com tudo prontinho
+          pra eu confirmar disponibilidade e pagamento.
+        </p>
+
+        <div class="badges">
+          <div class="badge">📦 Entrega: 24h a 48h</div>
+          <div class="badge">🚗 Interior da cidade: com carona (sem taxa)</div>
+          <div class="badge">🚕 Sem carona: taxa R$ 20</div>
+        </div>
+
+        <div class="actions" style="margin-top:16px">
+          <a class="btn" href="#portfolio">Ver portfólio</a>
+          <a class="btn primary" href="#agendar">Simular agora</a>
+        </div>
+
+        <p class="hint">Dica: você pode colocar este link direto na bio do Instagram.</p>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle" style="margin:0 0 10px">
+          <h3>Tabela rápida (resumo)</h3>
+          <span>valores principais</span>
+        </div>
+        <div class="small">
+          • Ensaio no estúdio (fundo branco/azul/preto): <b>R$ 150</b> (15 fotos editadas) + <b>R$ 10</b> foto extra<br/>
+          • Ensaio externo na cidade: <b>R$ 125</b> (15 fotos editadas) + <b>R$ 8,33</b> foto extra<br/>
+          • Casamento: <b>R$ 125/h</b><br/>
+          • Aniversário: <b>R$ 200</b> (2h) + <b>R$ 50</b> hora extra<br/>
+          • Batizado (igreja): <b>R$ 10</b> por foto (mínimo 5 fotos)<br/>
+          • Batizado + almoço (cobertura curta): <b>R$ 100</b> (1h30, fotos ilimitadas)<br/>
+          • Formatura (turmas/individual): <b>orçamento via WhatsApp</b>
+        </div>
+      </div>
+    </section>
+
+    <div class="sectionTitle" id="agendar">
+      <h3>Simular orçamento & agendar</h3>
+      <span>calcula automaticamente</span>
+    </div>
+
+    <section class="grid2">
+      <div class="card">
+        <label for="tipo">Tipo de serviço</label>
+        <select id="tipo">
+          <option value="studio">Ensaio no estúdio (fundo branco/azul/preto)</option>
+          <option value="externo">Ensaio externo na cidade</option>
+          <option value="casamento">Casamento (por hora)</option>
+          <option value="aniversario">Aniversário (2h + hora extra)</option>
+          <option value="batizado_igreja">Batizado (igreja — por foto)</option>
+          <option value="batizado_almoco">Batizado + almoço (1h30 — ilimitadas)</option>
+          <option value="formatura">Formatura (orçamento)</option>
+        </select>
+
+        <div class="row">
+          <div>
+            <label for="data">Escolha a data</label>
+            <input id="data" type="date" />
+            <div class="hint">Se não aparecer, atualize o navegador ou tente no Chrome.</div>
+          </div>
+          <div>
+            <label for="cidade">Local</label>
+            <select id="cidade">
+              <option value="cidade">Na cidade</option>
+              <option value="interior">Interior da cidade</option>
+            </select>
+            <div class="hint">Interior: com carona (sem taxa) • sem carona: +R$20</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="carona">No interior, terá carona?</label>
+            <select id="carona">
+              <option value="sim">Sim (sem taxa)</option>
+              <option value="nao">Não (+ R$ 20)</option>
+            </select>
+          </div>
+          <div>
+            <label for="nome">Seu nome (opcional)</label>
+            <input id="nome" placeholder="Ex: Maria" />
+          </div>
+        </div>
+
+        <label for="obs">Observações (opcional)</label>
+        <textarea id="obs" rows="3" placeholder="Ex: horário, endereço aproximado, referências..."></textarea>
+
+        <div class="actions">
+          <button class="btn" id="btnLimpar" type="button">Limpar</button>
+          <button class="btn primary" id="btnWhats" type="button">Agendar via WhatsApp</button>
+        </div>
+
+        <div class="hint">
+          * O agendamento via WhatsApp é um <b>pré-agendamento</b>. Eu confirmo disponibilidade e forma de pagamento.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pill">🧾 Resultado do orçamento</div>
+
+        <!-- Inputs dinâmicos -->
+        <div id="inputsDinamicos"></div>
+
+        <div class="summary" id="resumo">
+          <div class="sumLine"><span>Base</span><span id="linhaBase">—</span></div>
+          <div class="sumLine"><span>Extras</span><span id="linhaExtras">—</span></div>
+          <div class="sumLine"><span>Taxa deslocamento</span><span id="linhaTaxa">—</span></div>
+          <div class="sumLine"><strong>Total estimado</strong><strong id="linhaTotal">R$ 0,00</strong></div>
+          <div class="small" id="linhaRegras"></div>
+        </div>
+
+        <div class="hint" style="margin-top:12px">
+          📦 <b>Entrega:</b> 24h a 48h (eventos e ensaios).<br/>
+          ✅ Valores podem variar conforme necessidade específica — mas aqui você já tem uma base real.
+        </div>
+      </div>
+    </section>
+
+    <div class="sectionTitle" id="portfolio">
+      <h3>Portfólio</h3>
+      <span>categorias</span>
+    </div>
+
+    <div class="filters" id="filtros">
+      <div class="chip active" data-filter="tudo">Tudo</div>
+      <div class="chip" data-filter="casamentos">Casamentos</div>
+      <div class="chip" data-filter="ensaios">Ensaios</div>
+      <div class="chip" data-filter="batizados">Batizados</div>
+      <div class="chip" data-filter="aniversarios">Aniversários</div>
+      <div class="chip" data-filter="formaturas">Formaturas</div>
+    </div>
+
+    <!-- Troque as imagens pelos seus arquivos (mais abaixo explico) -->
+    <section class="gallery" id="galeria">
+      <div class="gItem" data-cat="casamentos">
+        <img src="https://images.unsplash.com/photo-1523438097201-512ae7d59c6b?auto=format&fit=crop&w=1400&q=70" alt="Casamento" />
+        <div class="gCap"><b>Casamentos</b><span>emocional • elegante</span></div>
+      </div>
+      <div class="gItem" data-cat="ensaios">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1400&q=70" alt="Ensaio" />
+        <div class="gCap"><b>Ensaios</b><span>cidade • estúdio</span></div>
+      </div>
+      <div class="gItem" data-cat="batizados">
+        <img src="https://images.unsplash.com/photo-1523538290088-51e3e7a66b8b?auto=format&fit=crop&w=1400&q=70" alt="Batizado" />
+        <div class="gCap"><b>Batizados</b><span>igreja • família</span></div>
+      </div>
+      <div class="gItem" data-cat="aniversarios">
+        <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1400&q=70" alt="Aniversário" />
+        <div class="gCap"><b>Aniversários</b><span>festa • momentos</span></div>
+      </div>
+      <div class="gItem" data-cat="formaturas">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=70" alt="Formatura" />
+        <div class="gCap"><b>Formaturas</b><span>turma • individual</span></div>
+      </div>
+      <div class="gItem" data-cat="ensaios">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1400&q=70" alt="Ensaio 2" />
+        <div class="gCap"><b>Ensaios</b><span>luz natural</span></div>
+      </div>
+    </section>
+
+    <footer>
+      <div><b>© Luis Carlos Fotografia</b> — Atendimento e confirmação via WhatsApp.</div>
+      <div style="margin-top:8px">
+        <span class="small">
+          Aviso: este site faz <b>pré-agendamento</b>. A confirmação final depende de disponibilidade e alinhamento do serviço.
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ====== CONFIGURAÇÕES ======
+    const WHATSAPP_NUMBER = "SEU_NUMERO_AQUI"; // Ex: "559984491410"
+
+    // ====== UTIL ======
+    const brl = (n) => n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    const clampInt = (v, min, max) => {
+      const x = parseInt(v, 10);
+      if (Number.isNaN(x)) return min;
+      return Math.min(max, Math.max(min, x));
+    };
+
+    // ====== ELEMENTOS ======
+    const tipo = document.getElementById("tipo");
+    const data = document.getElementById("data");
+    const cidade = document.getElementById("cidade");
+    const carona = document.getElementById("carona");
+    const nome = document.getElementById("nome");
+    const obs = document.getElementById("obs");
+
+    const inputsDinamicos = document.getElementById("inputsDinamicos");
+    const linhaBase = document.getElementById("linhaBase");
+    const linhaExtras = document.getElementById("linhaExtras");
+    const linhaTaxa = document.getElementById("linhaTaxa");
+    const linhaTotal = document.getElementById("linhaTotal");
+    const linhaRegras = document.getElementById("linhaRegras");
+
+    const btnWhats = document.getElementById("btnWhats");
+    const btnLimpar = document.getElementById("btnLimpar");
+
+    // ====== CAMPOS DINÂMICOS POR TIPO ======
+    function renderInputs() {
+      const t = tipo.value;
+
+      let html = "";
+      if (t === "studio") {
+        html += `
+          <label for="fundo">Fundo do estúdio</label>
+          <select id="fundo">
+            <option value="Branco">Branco</option>
+            <option value="Azul">Azul</option>
+            <option value="Preto">Preto</option>
+          </select>
+
+          <label for="extrasFotos">Fotos extras (além das 15)</label>
+          <input id="extrasFotos" type="number" min="0" max="200" value="0" />
+          <div class="hint">Base: R$150 com 15 fotos editadas • Extra: R$10 cada.</div>
+        `;
+      } else if (t === "externo") {
+        html += `
+          <label for="extrasFotos">Fotos extras (além das 15)</label>
+          <input id="extrasFotos" type="number" min="0" max="200" value="0" />
+          <div class="hint">Base: R$125 com 15 fotos editadas • Extra: R$8,33 cada.</div>
+        `;
+      } else if (t === "casamento") {
+        html += `
+          <label for="horas">Total de horas</label>
+          <input id="horas" type="number" min="1" max="24" value="4" />
+          <div class="hint">R$125 por hora.</div>
+        `;
+      } else if (t === "aniversario") {
+        html += `
+          <label for="horas">Total de horas</label>
+          <input id="horas" type="number" min="2" max="24" value="2" />
+          <div class="hint">Base: R$200 (2h) • Hora extra: R$50 cada hora a mais.</div>
+        `;
+      } else if (t === "batizado_igreja") {
+        html += `
+          <label for="qtdFotos">Quantidade de fotos (mínimo 5)</label>
+          <input id="qtdFotos" type="number" min="5" max="300" value="5" />
+          <div class="hint">R$10 por foto • mínimo 5.</div>
+        `;
+      } else if (t === "batizado_almoco") {
+        html += `
+          <div class="pill">🍽 Batizado + almoço</div>
+          <div class="hint" style="margin-top:10px">R$100 • 1h30 • fotos ilimitadas.</div>
+        `;
+      } else if (t === "formatura") {
+        html += `
+          <div class="pill">🎓 Formatura</div>
+          <div class="hint" style="margin-top:10px">
+            Turmas fechadas e individual: <b>orçamento via WhatsApp</b>.
+          </div>
+          <label for="detalhesForm">Detalhes (opcional)</label>
+          <textarea id="detalhesForm" rows="3" placeholder="Ex: turma/curso, quantidade de pessoas, local, data provável..."></textarea>
+        `;
+      }
+
+      inputsDinamicos.innerHTML = html;
+      atualizar();
+    }
+
+    // ====== TAXA DESLOCAMENTO ======
+    function calcTaxa() {
+      // Regra: interior da cidade com carona = sem taxa, sem carona = 20
+      if (cidade.value === "interior") {
+        return (carona.value === "nao") ? 20 : 0;
+      }
+      return 0;
+    }
+
+    // ====== CÁLCULO PRINCIPAL ======
+    function calcular() {
+      const t = tipo.value;
+      const taxa = calcTaxa();
+
+      let base = 0;
+      let extras = 0;
+      let regras = "";
+      let detalhes = {};
+
+      if (t === "studio") {
+        base = 150;
+        const fundo = document.getElementById("fundo")?.value || "Branco";
+        const extrasFotos = clampInt(document.getElementById("extrasFotos")?.value ?? 0, 0, 200);
+        extras = extrasFotos * 10;
+        regras = "Ensaio estúdio: R$150 (15 fotos editadas) + R$10/foto extra.";
+        detalhes = { fundo, extrasFotos, fotosBase: 15 };
+      }
+
+      if (t === "externo") {
+        base = 125;
+        const extrasFotos = clampInt(document.getElementById("extrasFotos")?.value ?? 0, 0, 200);
+        extras = extrasFotos * 8.33;
+        regras = "Ensaio externo: R$125 (15 fotos editadas) + R$8,33/foto extra.";
+        detalhes = { extrasFotos, fotosBase: 15 };
+      }
+
+      if (t === "casamento") {
+        const horas = clampInt(document.getElementById("horas")?.value ?? 1, 1, 24);
+        base = horas * 125;
+        regras = "Casamento: R$125 por hora.";
+        detalhes = { horas };
+      }
+
+      if (t === "aniversario") {
+        const horas = clampInt(document.getElementById("horas")?.value ?? 2, 2, 24);
+        base = 200;
+        const extraHoras = Math.max(0, horas - 2);
+        extras = extraHoras * 50;
+        regras = "Aniversário: R$200 (2h) + R$50 por hora extra.";
+        detalhes = { horas, extraHoras };
+      }
+
+      if (t === "batizado_igreja") {
+        const qtd = clampInt(document.getElementById("qtdFotos")?.value ?? 5, 5, 300);
+        base = qtd * 10;
+        regras = "Batizado (igreja): R$10 por foto • mínimo 5.";
+        detalhes = { qtdFotos: qtd };
+      }
+
+      if (t === "batizado_almoco") {
+        base = 100;
+        regras = "Batizado + almoço: R$100 • 1h30 • fotos ilimitadas.";
+        detalhes = { duracao: "1h30", fotos: "ilimitadas" };
+      }
+
+      if (t === "formatura") {
+        base = 0;
+        regras = "Formatura: orçamento via WhatsApp (turmas fechadas e individual).";
+        const detalhesForm = document.getElementById("detalhesForm")?.value?.trim() || "";
+        detalhes = { detalhesForm };
+      }
+
+      const total = base + extras + taxa;
+
+      return { base, extras, taxa, total, regras, detalhes };
+    }
+
+    // ====== UI ======
+    function atualizar() {
+      const r = calcular();
+
+      // Base / Extras
+      linhaBase.textContent = (tipo.value === "formatura") ? "Orçamento via WhatsApp" : brl(r.base);
+      linhaExtras.textContent = (tipo.value === "formatura") ? "—" : (r.extras > 0 ? brl(r.extras) : "—");
+
+      // Taxa
+      if (r.taxa > 0) {
+        linhaTaxa.innerHTML = `<span class="warn">${brl(r.taxa)}</span>`;
+      } else {
+        linhaTaxa.textContent = "—";
+      }
+
+      // Total
+      if (tipo.value === "formatura") {
+        linhaTotal.textContent = "A combinar";
+      } else {
+        linhaTotal.textContent = brl(r.total);
+      }
+
+      linhaRegras.textContent = r.regras;
+
+      // Ajustes visuais do campo carona: só faz sentido no interior
+      carona.disabled = (cidade.value !== "interior");
+      if (carona.disabled) carona.value = "sim";
+    }
+
+    // ====== WHATSAPP MSG ======
+    function gerarMensagem() {
+      const r = calcular();
+      const t = tipo.value;
+
+      const tipoLabel = tipo.options[tipo.selectedIndex].text;
+      const dataEscolhida = data.value ? new Date(data.value + "T00:00:00").toLocaleDateString("pt-BR") : "NÃO INFORMADA";
+      const localLabel = (cidade.value === "interior")
+        ? `Interior da cidade (${carona.value === "nao" ? "sem carona + R$20" : "com carona"})`
+        : "Na cidade";
+
+      const nomeTxt = nome.value?.trim() ? `Nome: ${nome.value.trim()}\n` : "";
+      const obsTxt = obs.value?.trim() ? `Obs: ${obs.value.trim()}\n` : "";
+
+      let detalhesTxt = "";
+      if (t === "studio") {
+        const fundo = document.getElementById("fundo")?.value || "Branco";
+        const extrasFotos = clampInt(document.getElementById("extrasFotos")?.value ?? 0, 0, 200);
+        detalhesTxt =
+          `Fundo: ${fundo}\n` +
+          `Fotos inclusas: 15 editadas\n` +
+          `Fotos extras: ${extrasFotos}\n`;
+      } else if (t === "externo") {
+        const extrasFotos = clampInt(document.getElementById("extrasFotos")?.value ?? 0, 0, 200);
+        detalhesTxt =
+          `Fotos inclusas: 15 editadas\n` +
+          `Fotos extras: ${extrasFotos}\n`;
+      } else if (t === "casamento") {
+        const horas = clampInt(document.getElementById("horas")?.value ?? 1, 1, 24);
+        detalhesTxt = `Horas: ${horas}h\n`;
+      } else if (t === "aniversario") {
+        const horas = clampInt(document.getElementById("horas")?.value ?? 2, 2, 24);
+        detalhesTxt = `Horas: ${horas}h (base 2h)\n`;
+      } else if (t === "batizado_igreja") {
+        const qtd = clampInt(document.getElementById("qtdFotos")?.value ?? 5, 5, 300);
+        detalhesTxt = `Fotos: ${qtd} (mínimo 5)\n`;
+      } else if (t === "batizado_almoco") {
+        detalhesTxt = `Duração: 1h30\nFotos: ilimitadas\n`;
+      } else if (t === "formatura") {
+        const detalhesForm = document.getElementById("detalhesForm")?.value?.trim() || "";
+        detalhesTxt = detalhesForm ? `Detalhes: ${detalhesForm}\n` : "";
+      }
+
+      const valorTxt = (t === "formatura")
+        ? "Valor: ORÇAMENTO (turma/individual)\n"
+        : `Valor estimado: ${brl(r.total)}\n`;
+
+      const taxaTxt = (r.taxa > 0) ? `Taxa deslocamento: ${brl(r.taxa)}\n` : "";
+
+      const msg =
+`Olá, Luis Carlos Fotografia!
+Quero agendar:
+
+${nomeTxt}Serviço: ${tipoLabel}
+Data: ${dataEscolhida}
+Local: ${localLabel}
+${detalhesTxt}${valorTxt}${taxaTxt}Entrega: 24h a 48h
+${obsTxt}
+Pode confirmar a disponibilidade e me passar as formas de pagamento?`;
+
+      return msg;
+    }
+
+    function abrirWhatsApp() {
+      if (!WHATSAPP_NUMBER || WHATSAPP_NUMBER === "SEU_NUMERO_AQUI") {
+        alert("Você precisa colocar seu número no código.\nProcure por WHATSAPP_NUMBER e substitua SEU_NUMERO_AQUI.");
+        return;
+      }
+      const msg = gerarMensagem();
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    }
+
+    // ====== EVENTOS ======
+    tipo.addEventListener("change", renderInputs);
+    [data, cidade, carona, nome, obs].forEach(el => el.addEventListener("input", atualizar));
+    btnWhats.addEventListener("click", abrirWhatsApp);
+    btnLimpar.addEventListener("click", () => {
+      tipo.value = "studio";
+      data.value = "";
+      cidade.value = "cidade";
+      carona.value = "sim";
+      nome.value = "";
+      obs.value = "";
+      renderInputs();
+      atualizar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Galeria: filtros
+    const chips = Array.from(document.querySelectorAll(".chip"));
+    const items = Array.from(document.querySelectorAll(".gItem"));
+    chips.forEach(ch => ch.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      ch.classList.add("active");
+      const f = ch.dataset.filter;
+      items.forEach(it => {
+        const cat = it.dataset.cat;
+        it.style.display = (f === "tudo" || f === cat) ? "block" : "none";
+      });
+    }));
+
+    // Inicialização
+    renderInputs();
+    atualizar();
+  </script>
+</body>
+</html>
